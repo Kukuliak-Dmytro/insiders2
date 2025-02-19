@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String          @id @default(uuid())
+  name     String
+  email    String          @unique
+  password String
+  lists    UserListRoles[]
+  List     List[]
+}
+
+model List {
+  id      String          @id @default(uuid())
+  name    String
+  ownerId String
+  owner   User            @relation(fields: [ownerId], references: [id])
+  tasks   Task[]
+  members UserListRoles[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Task {
+  id          String  @id @default(uuid())
+  title       String
+  description String?
+  completed   Boolean @default(false)
+  listId      String
+  list        List    @relation(fields: [listId], references: [id])
+  isCompleted Boolean @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model UserListRoles {
+  id     String @id @default(uuid())
+  userId String
+  listId String
+  role   Role
+  user   User   @relation(fields: [userId], references: [id])
+  list   List   @relation(fields: [listId], references: [id])
+
+  @@unique([userId, listId]) // Забезпечує унікальність пари user-list
+}
+
+enum Role {
+  ADMIN
+  VIEWER
+}
