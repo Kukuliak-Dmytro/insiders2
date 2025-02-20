@@ -23,6 +23,20 @@ export default function Login() {
                 console.log(data);
                 localStorage.setItem("accessToken", data.accessToken);
                 localStorage.setItem("refreshToken", data.refreshToken);
+                localStorage.setItem("userId", data.userId);
+                localStorage.setItem("signedIn", "true");
+                setTimeout( async () => {
+                    localStorage.removeItem("accessToken");
+                    localStorage.setItem("signedIn", "false");
+                    // const {data1,error1, loading1}=fetchData("http://localhost:3000/auth/refresh", "POST", {
+                    //     refreshToken: localStorage.getItem("refreshToken")
+                    // });
+                    // localStorage.setItem("accessToken", data.accessToken);
+                    // localStorage.setItem("refreshToken", data.refreshToken);
+                    // localStorage.setItem("userId", data.userId);
+                    
+                    navigate("/login", {replace: true});
+                }, 1000*60*60);
                 navigate("/");
             }
     }

@@ -29,6 +29,9 @@ const listService = {
         return prisma.task.findMany({
             where: {
                 listId: listId
+            },
+            orderBy: {
+                created_at: "asc"
             }
         });
     },

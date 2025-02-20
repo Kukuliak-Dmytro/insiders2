@@ -27,7 +27,11 @@ const todoController = {
             if (userLists.length === 0) {
                 res.json({ message: "No lists found" });
             } else {
-                res.json(await listOperations.getAllUserListsOperation({ id }));
+                const lists = await Promise.all(userLists.map(async (list) => {
+                    const tasks = await listOperations.getAllTasksByListIdOperation({ listId: list.id });
+                    return { ...list, tasks };
+                }));
+                res.json(lists);
             }
         } catch (error) {
             next(error);
