@@ -1,4 +1,4 @@
-import { addAdminRole, addTaskOperation, createListOperation, editListOperation, deleteListOperation, getOneListbyIdOperation, getAllUserListsOperation } from "../operations/todo_operations";
+import { addAdminRole, addTaskOperation, createListOperation, editListOperation, deleteListOperation, getOneListbyIdOperation, getAllUserListsOperation, editTaskOperation, deleteTaskOperation, getAllTasksByListIdOperation } from "../operations/todo_operations";
 import { Request, Response, NextFunction } from "express";
 import { CustomApiError } from "../types/interface";
 export async function createList(req: Request, res: Response, next: NextFunction){
@@ -36,6 +36,15 @@ export async function getAllUserLists(req: Request, res: Response, next: NextFun
         next(error);
     }
 }
+export async function getTasksFromList(req: Request, res: Response, next: NextFunction){
+    try{
+        const listId = req.params.id;
+        res.json(await getAllTasksByListIdOperation({listId}))
+    }
+    catch (error){
+        next(error);
+    }
+}
 export async function editList(req: Request, res: Response, next: NextFunction){
     try{
         const listId = req.params.id;
@@ -61,6 +70,26 @@ export async function addTask(req: Request, res: Response, next: NextFunction){
         const {listId,title, description} = req.body;
         res.json(await addTaskOperation({listId, title, description,}))
 
+    }
+    catch (error){
+        next(error);
+    }
+}
+
+export async function editTask(req: Request, res: Response, next: NextFunction){
+    try{
+        const taskId = req.params.id;
+        const {title, description, completed} = req.body;
+        res.json(await editTaskOperation({taskId, title, description, completed}))
+    }
+    catch (error){
+        next(error);
+    }
+}
+export async function deleteTask(req: Request, res: Response, next: NextFunction){
+    try{
+        const taskId = req.params.id;
+        res.json(await deleteTaskOperation({taskId}))
     }
     catch (error){
         next(error);

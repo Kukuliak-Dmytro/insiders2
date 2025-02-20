@@ -29,6 +29,13 @@ const listService = {
             }
         });
     },
+    getAllTasksByListId: async ({ listId }: { listId: string }) => {
+        return prisma.task.findMany({
+            where: {
+                listId: listId
+            }
+        });
+    },
     editListById: async ({ listId, name }: { listId: string, name: string }) => {
         return prisma.list.update({
             where: {

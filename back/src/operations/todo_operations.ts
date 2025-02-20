@@ -21,6 +21,13 @@ export async function getOneListbyIdOperation({id}:{id:string}){
     }
     return list;
 }
+export async function getAllTasksByListIdOperation({listId}:{listId:string}){
+    if (!listId){
+        throw new CustomApiError("listId is required", 400);
+    }
+
+    return await listService.getAllTasksByListId({listId});
+}
 
 export async function getAllUserListsOperation({id}:{id:string}){
     if (!id){
@@ -68,6 +75,26 @@ export async function addTaskOperation({listId,title, description}:{listId:strin
     }
 
     return await taskService.addTaskToListById({listId, title, description, });
+}
+export async function editTaskOperation({taskId, title, description, completed}:{taskId:string, title:string, description:string, completed:boolean}){
+    if (!taskId || !title || !description || !completed){
+        throw new CustomApiError("taskId,title,description, and completed are required", 400);
+    }
+
+    return await taskService.editTaskById({taskId, title, description, completed});
+}
+export async function deleteTaskOperation({taskId}:{taskId:string}){
+    if (!taskId){
+        throw new CustomApiError("taskId is required", 400);
+    }
+
+    const deletedTask= await taskService.deleteTaskById({taskId});
+    if (!deletedTask){
+        throw new CustomApiError("Task not found", 404);
+    }
+
+    return deletedTask
+    
 }
 export async function addAdminRole({userId, listId}:{userId:string, listId:string}){
     if (!userId || !listId){

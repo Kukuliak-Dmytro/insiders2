@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { login,register, greet,refresh } from "../controllers/user_controller";
 import { authenticateMiddleware } from "../middleware/authenticateMiddleware";
-import { createList, addTask, editList, getOneListById, deleteList, getAllUserLists } from "../controllers/todo_controller";
+import { createList, addTask, editList, getOneListById, deleteList, getAllUserLists, editTask, deleteTask, getTasksFromList} from "../controllers/todo_controller";
 const router = Router();
 
 router.get("/", authenticateMiddleware, greet);
@@ -11,10 +11,13 @@ router.post('/auth/refresh', refresh);
 
 router.get('/list/user/:id', getAllUserLists)
 router.get('/list/:id', getOneListById);
+router.get('/list/:id/tasks', getTasksFromList);
 router.post('/list', createList);
 router.patch('/list/:id', editList);
 router.delete('/list/:id', deleteList);
 router.post('/task', addTask);
+router.patch('/task/:id', editTask);
+router.delete('/task/:id', deleteTask);
 
 
 export default router;
