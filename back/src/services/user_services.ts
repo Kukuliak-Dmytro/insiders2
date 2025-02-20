@@ -13,6 +13,7 @@ export async function getUserById(id: string) {
         where: { id },
     });
 }
+
 export async function createUser({ email, name, password }: { email: string; name: string; password: string }) {
     const existingUser = await getUserByEmail(email);
     if (existingUser) {
