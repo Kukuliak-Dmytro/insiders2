@@ -1,7 +1,7 @@
 // 
 import dotenv from "dotenv";
 dotenv.config();
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 // import bcrypt from "bcrypt";
@@ -9,11 +9,13 @@ import cors from "cors";
 // import { JwtPayload, AuthRequest } from "./src/interfaces/interface";
 // import { authenticateMiddleware } from "./src/middleware/authenticateMiddleware";
 import router from "./src/routes/routes";
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
+import errorMiddleware from "./src/middleware/errorMiddleware";
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/',router);
+app.use(errorMiddleware);
 // const secret = process.env.ACCESS_TOKEN_SECRET  as string;
 
 

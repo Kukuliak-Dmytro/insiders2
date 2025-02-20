@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { JwtPayload, AuthRequest } from "../interfaces/interface";
+import { JwtPayload, AuthRequest } from "../types/interface";
 import  dotenv from "dotenv";
 dotenv.config();
 const secret = process.env.ACCESS_TOKEN_SECRET as string
@@ -24,7 +24,7 @@ export const authenticateMiddleware = (req: AuthRequest, res: Response, next: Ne
             return;
         }
 
-        const user = decoded as JwtPayload; // Приведення типу
+        const user = decoded as JwtPayload; 
         req.user = user;
         next();
     });
