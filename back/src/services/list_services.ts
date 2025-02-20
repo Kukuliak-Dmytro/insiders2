@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { getAllUserLists } from "../controllers/todo_controller";
 const prisma = new PrismaClient();
 
 const listService = {
@@ -17,9 +16,6 @@ const listService = {
                 id: id
             }
         });
-        // if (list === null) {
-        //     return null;
-        // }
         return list;
     },
     getAllUserLists: async ({ id }: { id: string }) => {
