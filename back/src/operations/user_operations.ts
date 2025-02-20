@@ -1,6 +1,6 @@
 import { Request } from "express";
 import { CustomApiError } from "../types/interface";
-import { getUserByEmail, createUser } from "../services/user_services";
+import { getUserByEmail, createUser, getUserById } from "../services/user_services";
 import bcrypt from "bcrypt";
 export async function authLogin({email, password}:{email:string, password:string}){
     if (!email || !password) {
@@ -30,3 +30,10 @@ export async function authRegister({email, name, password}:{email:string, name:s
 
     return user;
 }
+// export async function authRefresh({refreshToken}:{refreshToken:string}){
+//     const user = await getUserById(refreshToken);
+//     if (!user) {
+//         throw new CustomApiError("User not found", 404);
+//     }
+//     return user;
+// }
