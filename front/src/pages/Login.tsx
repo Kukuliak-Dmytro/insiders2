@@ -14,8 +14,7 @@ export default function Login() {
 })
     const  handleSubmit =async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("submit");
-            const {data,error,loading}= await fetchData("http://localhost:3000/auth/login", "POST", loginData);
+        const {data,error,loading}= await fetchData("http://localhost:3000/auth/login", "POST", loginData);
             if (data.code>=400) {
                 window.alert(data.message);
                 return;

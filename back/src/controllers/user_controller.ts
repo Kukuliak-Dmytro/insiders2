@@ -14,8 +14,8 @@ export async function register(req: Request, res: Response, next: NextFunction) 
 
         const user = await authRegister({ email, name, password });
         const accessToken = jwt.sign({ id: user.id, name: user.name, email: user.email }, secret, { expiresIn: "1h" });
-
-        res.json({ accessToken });
+        const refreshToken = jwt.sign({ id: user.id, name: user.name, email: user.email }, secret);
+        res.json({ userId: user.id, accessToken: accessToken, refreshToken: refreshToken });
     } catch (error) {
         next(error);
     }
@@ -28,9 +28,9 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 
         const accessToken = jwt.sign({ id: user.id, name: user.name, email: user.email }, secret, { expiresIn: "1h" });
         const refreshToken = jwt.sign({ id: user.id, name: user.name, email: user.email }, secret);
-        res.json({ accessToken: accessToken, refreshToken: refreshToken });
+        res.json({ userId: user.id, accessToken: accessToken, refreshToken: refreshToken });
         // res.cookie("refreshToken", refreshToken, { httpOnly: true });
-        res.json({ accessToken });
+        // res.json({ accessToken });
     } catch (error) {
         next(error);
     }
@@ -51,7 +51,7 @@ export async function refresh(req: Request, res: Response, next: NextFunction) {
             const user = decoded as JwtPayload;
             const accessToken = jwt.sign({ id: user.id, name: user.name, email: user.email }, secret, { expiresIn: "1h" });
             const refreshToken = jwt.sign({ id: user.id, name: user.name, email: user.email }, secret);
-            res.json({ accessToken: accessToken, refreshToken: refreshToken });
+            res.json({ userId: user.id, accessToken: accessToken, refreshToken: refreshToken });
         }
         )
 
