@@ -30,7 +30,7 @@ export async function getAllUserListsOperation({id}:{id:string}){
     if (await getUserById(id)===null){
         throw new CustomApiError("User not found", 404);
     }
-    
+
     
     return await listService.getAllUserLists({id});
 }
@@ -45,14 +45,24 @@ export async function deleteListOperation({listId}:{listId:string}){
     if (!listId){
         throw new CustomApiError("listId is required", 400);
     }
+
+    const deletedRelations= await listService.deleteAllListRelationsByUserAndListId({listId});
+    console.log(deletedRelations);
     const deletedTasks= await taskService.deleteAllTasksByListId({listId});
+    console.log(deletedTasks);
     const deletedList= await listService.deleteListById({listId});
-    if (!deletedList || !deletedTasks){
+    console.log(deletedList);
+
+    if (!deletedList){
         throw new CustomApiError("List not found", 404);
     }
     return deletedList;
 }
 export async function addTaskOperation({listId,title, description}:{listId:string, title:string, description:string}){
+    const listExists= await listService.getOneListById({id:listId});
+    if (!listExists){
+        throw new CustomApiError("List not found", 404);
+    }
     if (!listId || !title || !description){
         throw new CustomApiError("listId,title, and description are required", 400);
     }

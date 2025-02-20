@@ -46,17 +46,18 @@ export async function editList(req: Request, res: Response, next: NextFunction){
         next(error);
     }
 }
-// export async function deleteList(req: Request, res: Response, next: NextFunction){
-//     try{
-//         const {listId} = req.body;
-//         res.json(await deleteListOperation({listId}))
-//     }
-//     catch (error){
-//         next(error);
-//     }
-// }
+export async function deleteList(req: Request, res: Response, next: NextFunction){
+    try{
+        const listId = req.params.id;
+        res.json(await deleteListOperation({listId}))
+    }
+    catch (error){
+        next(error);
+    }
+}
 export async function addTask(req: Request, res: Response, next: NextFunction){
     try{
+        
         const {listId,title, description} = req.body;
         res.json(await addTaskOperation({listId, title, description,}))
 

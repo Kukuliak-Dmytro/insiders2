@@ -49,7 +49,7 @@ const listService = {
         if (list === null) {
             return null;
         }
-        console.log("List: ", list);
+        // console.log("List: ", list);
         return prisma.list.delete({
             where: {
                 id: listId
@@ -64,6 +64,14 @@ const listService = {
                 role: "ADMIN"
             }
         });
+    },
+    deleteAllListRelationsByUserAndListId: async ({  listId }: { listId:string }) => {
+        return prisma.userListRoles.deleteMany({
+            where: {
+               listId:listId
+            }
+        });
+        
     }
 };
 
