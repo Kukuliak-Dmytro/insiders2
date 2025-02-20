@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { authLogin, authRegister } from "../operations/user_operations";
@@ -8,8 +7,6 @@ const secret = process.env.ACCESS_TOKEN_SECRET as string;
 export async function greet(req: Request, res: Response) {
     res.send("Welcome to the API!");
 }
-
-
 
 export async function register(req: Request, res: Response, next: NextFunction) {
     try {

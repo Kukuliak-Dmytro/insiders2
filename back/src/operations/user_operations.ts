@@ -30,10 +30,3 @@ export async function authRegister({email, name, password}:{email:string, name:s
 
     return user;
 }
-// export async function authRefresh({refreshToken}:{refreshToken:string}){
-//     const user = await getUserById(refreshToken);
-//     if (!user) {
-//         throw new CustomApiError("User not found", 404);
-//     }
-//     return user;
-// }
