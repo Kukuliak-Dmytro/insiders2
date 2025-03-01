@@ -1,7 +1,7 @@
-import { useAuth } from "@/utils/storage";
 
+import { logOut } from "@/utils/storage";
 export default function Home() {
-    const { logOut } = useAuth();
+    
 
     return (
         <>

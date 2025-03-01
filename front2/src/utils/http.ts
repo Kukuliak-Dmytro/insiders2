@@ -1,4 +1,6 @@
-import axios from 'axios'
+import {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
 
-
-const AxiosAuthCLient = axios.create({ baseURL: 'http://localhost:4000', withCredentials:true })
+const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
+    console.info(`[request] [${JSON.stringify(config)}]`);
+    return config;
+}

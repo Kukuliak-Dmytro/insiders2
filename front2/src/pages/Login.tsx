@@ -4,13 +4,12 @@ import { Label } from "@radix-ui/react-label";
 import useFormState from "@/hooks/useFormState";
 import { FormEvent } from "react";
 import { login } from "@/services/userFetches";
-import { useAuth } from "@/utils/storage";
+import {logIn } from "@/utils/storage";
 import { LoginData } from "@/types/authTypes";
 import { useNavigate } from "react-router";
 
 export default function LoginPage() {
     const navigate = useNavigate();
-    const { logIn } = useAuth();
     const [loginState, handleLoginState] = useFormState<LoginData>({
         email: '',
         password: '',
