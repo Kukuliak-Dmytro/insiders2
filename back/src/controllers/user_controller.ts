@@ -36,8 +36,8 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 
         const user = await authLogin({ email, password });
 
-        const accessToken = jwt.sign({ id: user.id, name: user.name, email: user.email }, secret, { expiresIn: "1h" });
-        const refreshToken = jwt.sign({ id: user.id, name: user.name, email: user.email }, secret);
+        const accessToken = jwt.sign({  name: user.name, email: user.email }, secret, { expiresIn: "1h" });
+        const refreshToken = jwt.sign({ name: user.name, email: user.email }, secret);
 
         // Зберігаємо refreshToken в HTTP-only cookie
         res.cookie("refreshToken", refreshToken, {
