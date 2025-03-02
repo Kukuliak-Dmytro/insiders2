@@ -16,7 +16,7 @@ export default function Home() {
         <>
             <h1>Welcome, authorized user!</h1>
             <Button onClick={logOut}>Log out</Button>
-            <Button onClick={handleFetch}>Fetch Data</Button>
+            <Button onClick={handleFetch}>Test auth</Button>
         </>
     );
 }

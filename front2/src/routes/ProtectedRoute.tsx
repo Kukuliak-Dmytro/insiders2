@@ -1,6 +1,6 @@
 import { PropsWithChildren, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { isSignedIn } from "./utils/storage";
+import { isSignedIn } from "../utils/storage";
 
 type ProtectedRouteProps = PropsWithChildren<{}>;
 

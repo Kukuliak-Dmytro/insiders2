@@ -14,9 +14,9 @@ const useFormState = <T extends Record<string, any>>(initialState: T) => {
         });
 
         // Log the new state after it has been set
-        setTimeout(() => {
-            console.log({ ...formState, [key]: value });
-        }, 0);
+        // setTimeout(() => {
+        //     console.log({ ...formState, [key]: value });
+        // }, 0);
         };
         return [formState, handleChange] as const;
 };
