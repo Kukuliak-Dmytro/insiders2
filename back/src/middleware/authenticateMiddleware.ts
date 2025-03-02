@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { JwtPayload, AuthRequest } from "../types/interface";
 import  dotenv from "dotenv";
+import { CustomApiError } from "../types/interface";
 dotenv.config();
 const secret = process.env.ACCESS_TOKEN_SECRET as string
 
@@ -20,7 +21,7 @@ export const authenticateMiddleware = (req: AuthRequest, res: Response, next: Ne
 
     jwt.verify(token, secret, (err, decoded) => {
         if (err) {
-            res.status(403).json({ message: "Invalid token" });
+            res.status(401).json({ message: "Invalid token" });
             return;
         }
 
