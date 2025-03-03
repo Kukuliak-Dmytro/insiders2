@@ -19,7 +19,7 @@ export const logOut = () => {
 
 export const getAccessToken = () => {
     const accessToken = localStorage.getItem("accessToken");
-    console.log("getAccessToken:", accessToken);
+    // console.log("getAccessToken:", accessToken);
     return accessToken;
 };
 

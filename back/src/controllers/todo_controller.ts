@@ -79,6 +79,15 @@ const todoController = {
             next(error);
         }
     },
+    async toggleTaskCompletion(req: Request, res: Response, next: NextFunction) {
+        try {
+            const taskId = req.params.id;
+            const { completed } = req.body;
+            res.json(await taskOperations.editTaskCompletion({ taskId, completed }));
+        } catch (error) {
+            next(error);
+        }
+    },
     async deleteTask(req: Request, res: Response, next: NextFunction) {
         try {
             const taskId = req.params.id;

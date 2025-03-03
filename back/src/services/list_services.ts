@@ -22,6 +22,9 @@ const listService = {
         return prisma.list.findMany({
             where: {
                 ownerId: id
+            },
+            orderBy:{
+                created_at:"asc"
             }
         });
     },
@@ -31,7 +34,7 @@ const listService = {
                 listId: listId
             },
             orderBy: {
-                created_at: "asc"
+                title: "asc"
             }
         });
     },

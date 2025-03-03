@@ -20,6 +20,7 @@ router.delete('/list/:id', authenticateMiddleware, todoController.deleteList);
 
 router.post('/task', authenticateMiddleware, todoController.addTask);
 router.patch('/task/:id',authenticateMiddleware, todoController.editTask);
+router.patch('/task/:id/toggle', authenticateMiddleware, todoController.toggleTaskCompletion)
 router.delete('/task/:id',authenticateMiddleware, todoController.deleteTask);
 
 

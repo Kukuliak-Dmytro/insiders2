@@ -22,6 +22,13 @@ const taskOperations = {
 
         return await taskService.editTaskById({taskId, title, description, completed});
     },
+    async editTaskCompletion({taskId, completed}:{taskId:string, completed:boolean}){
+        if(!taskId || completed === undefined || completed === null){
+            throw new CustomApiError("taskId and completed are required!")
+        }
+        return await taskService.editTaskCompletion({taskId,completed})
+    }
+    ,
     async deleteTaskOperation({taskId}:{taskId:string}) {
         if (!taskId) {
             throw new CustomApiError("taskId is required", 400);

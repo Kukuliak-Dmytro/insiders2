@@ -25,6 +25,16 @@ const taskServices = {
             }
         });
     },
+    editTaskCompletion:async({taskId, completed}:{taskId:string, completed:boolean})=>{
+        return prisma.task.update({
+            where:{
+                id:taskId
+            },
+            data:{
+                completed
+            }
+        })
+    },
 
     deleteAllTasksByListId: async ({ listId }: { listId: string }) =>{
         const tasksById = prisma.task.findMany({
