@@ -15,12 +15,12 @@ const taskOperations = {
 
         return await taskService.addTaskToListById({listId, title, description});
     },
-    async editTaskOperation({taskId, title, description, completed}:{taskId:string, title:string, description:string, completed:boolean}) {
-        if (!taskId || !title || !description || !completed) {
-            throw new CustomApiError("taskId, title, description, and completed are required", 400);
+    async editTaskOperation({taskId, title, description}:{taskId:string, title:string, description:string}) {
+        if (!taskId || !title || !description) {
+            throw new CustomApiError("taskId, title, description are required", 400);
         }
 
-        return await taskService.editTaskById({taskId, title, description, completed});
+        return await taskService.editTaskById({taskId, title, description});
     },
     async editTaskCompletion({taskId, completed}:{taskId:string, completed:boolean}){
         if(!taskId || completed === undefined || completed === null){

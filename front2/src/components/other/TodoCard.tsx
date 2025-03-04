@@ -3,8 +3,7 @@ import { TodoListType } from "@/types/listTypes";
 import { ChangeTaskState } from "@/services/TaskFetches";
 import { useState } from "react";
 import { Link } from "react-router";
-import { Button } from "../ui/button";
-import { SimpleTaskCard } from "./TaskCard";
+import { SimpleTaskCard } from "./SimpleTaskCard";
 export default function TodoCard(list: TodoListType) {
     const [tasks, setTasks] = useState(list.tasks);
 
@@ -22,11 +21,11 @@ export default function TodoCard(list: TodoListType) {
             <AccordionItem value={`item-${list.id}`} className="border-b">
                 <AccordionTrigger className="px-4 py-2 text-lg font-semibold text-left bg-gray-100 hover:bg-gray-200 cursor-pointer flex items-center">
                     {list.name}
-                    <Link to={list.id.toString()}className="ml-auto"><Button >Edit</Button> </Link>
+                    <Link to={list.id.toString()}className="ml-auto">Edit</Link>
                 </AccordionTrigger>
                 <AccordionContent className="px-4 py-2">
                     {tasks!.map((task) => (
-                        <SimpleTaskCard task={task} toggleComplete={changeCompletedState}/>
+                        <SimpleTaskCard task={task} toggleComplete={changeCompletedState} key={task.id}/>
                     ))}
                 </AccordionContent>
             </AccordionItem>

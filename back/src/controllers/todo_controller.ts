@@ -73,8 +73,8 @@ const todoController = {
     async editTask(req: Request, res: Response, next: NextFunction) {
         try {
             const taskId = req.params.id;
-            const { title, description, completed } = req.body;
-            res.json(await taskOperations.editTaskOperation({ taskId, title, description, completed }));
+            const { title, description } = req.body;
+            res.json(await taskOperations.editTaskOperation({ taskId, title, description }));
         } catch (error) {
             next(error);
         }

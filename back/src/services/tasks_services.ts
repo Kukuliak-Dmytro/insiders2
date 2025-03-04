@@ -13,7 +13,7 @@ const taskServices = {
         });
     },
 
-     editTaskById: async({taskId, title, description, completed}:{taskId:string, title:string, description:string, completed:boolean}) =>{
+     editTaskById: async({taskId, title, description, }:{taskId:string, title:string, description:string}) =>{
         return prisma.task.update({
             where:{
                 id:taskId
@@ -21,7 +21,7 @@ const taskServices = {
             data:{
                 title,
                 description,
-                completed,
+               
             }
         });
     },
