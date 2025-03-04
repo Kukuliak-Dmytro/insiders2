@@ -6,6 +6,7 @@ import RegisterPage from "../pages/Register";
 import ProtectedRoute from "./ProtectedRoute";
 
 import AllTodosPage from "@/pages/AllTodosPage";
+import TodoPage from "@/pages/TodoPage";
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -24,6 +25,12 @@ export const router = createBrowserRouter([
                 element:
                 <ProtectedRoute>
                     <AllTodosPage/>
+                </ProtectedRoute>
+            },
+            {
+                path:'/lists/:id',
+                element:<ProtectedRoute>
+                    <TodoPage></TodoPage>
                 </ProtectedRoute>
             }
 

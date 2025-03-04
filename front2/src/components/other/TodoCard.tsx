@@ -1,10 +1,10 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 import { TodoListType } from "@/types/listTypes";
-import { Checkbox } from "../ui/checkbox";
 import { ChangeTaskState } from "@/services/TaskFetches";
 import { useState } from "react";
 import { Link } from "react-router";
 import { Button } from "../ui/button";
+import { SimpleTaskCard } from "./TaskCard";
 export default function TodoCard(list: TodoListType) {
     const [tasks, setTasks] = useState(list.tasks);
 
@@ -26,13 +26,7 @@ export default function TodoCard(list: TodoListType) {
                 </AccordionTrigger>
                 <AccordionContent className="px-4 py-2">
                     {tasks!.map((task) => (
-                        <div key={task.id} className="mb-4 p-4 border rounded-lg bg-gray-50">
-                            <span className="flex gap-2 items-center">
-                                <Checkbox id={`${task.id}`} defaultChecked={task.completed} onCheckedChange={() => changeCompletedState(task.id, task.completed)}></Checkbox>
-                                <label htmlFor={`${task.id}`} className={`text-sm font-medium cursor-pointer ${task.completed ? 'line-through' : ''}`}>Title: {task.title}</label>
-                            </span>
-                            <p className="text-sm text-gray-500">Created At: {task.created_at?.toString()}</p>
-                        </div>
+                        <SimpleTaskCard task={task} toggleComplete={changeCompletedState}/>
                     ))}
                 </AccordionContent>
             </AccordionItem>

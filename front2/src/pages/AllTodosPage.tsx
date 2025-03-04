@@ -16,10 +16,8 @@ export default function AllTodosPage() {
     return (
         <div>
             <h1>Welcome to all todos page!</h1>
-            <div className="flex flex-col gap-4">
-                
+            <div className="flex flex-col gap-4">                
                     {lists.map((list) => (
-
                         <TodoCard {...list} key={list.id} />
                     ))}
              
