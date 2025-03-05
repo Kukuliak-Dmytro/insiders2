@@ -7,7 +7,7 @@ const errorMiddleware: ErrorRequestHandler = (err: CustomApiError, _req, res, _n
 //    if (err instanceof CustomApiError || (err as CustomApiError).constructor.name === "CustomApiError") {
     res.status(err.statusCode).json({ code: err.statusCode, message: err.message });
     // return;
-// }
+    // }
 
 
     res.status(500).json({ success: false, message: 'Internal server error' });

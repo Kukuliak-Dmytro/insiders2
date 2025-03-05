@@ -1,26 +1,26 @@
 import { getCurrentUserLists } from "@/services/TodoListFetches"
 import TodoCard from "@/components/other/TodoCard";
-import { TodoListType } from "@/types/listTypes";
-import { useEffect, useState } from "react";
+import { useFetchPaginated } from "@/hooks/useFetchPagianted";
+import Pagination from "@/components/layout/Pagination";
 export default function AllTodosPage() {
-    const [lists, setlists] = useState<TodoListType[]>([])
-    const getAllLists = async () => {
-        const data = await getCurrentUserLists();
-        console.log(data)
-        setlists(data)
 
+    const { isLoading, currentItems, currentPage, totalPages, goToPreviousPage, goToNextPage, error } = useFetchPaginated(getCurrentUserLists, ['todos']);
+    
+    if (isLoading) {
+        return <h1>Loading...</h1>
     }
-    useEffect(() => {
-        getAllLists()
-    }, [])
+    if (error){
+        return <h1>Error: {error.message}</h1>
+    }
     return (
-        <div>
-            <h1>Welcome to all todos page!</h1>
-            <div className="flex flex-col gap-4">                
-                    {lists.map((list) => (
-                        <TodoCard {...list} key={list.id} />
-                    ))}
-             
+        <div className="flex flex-col justify-center items-center">
+            <h1 className="text-2xl font-bold mb-5">Welcome to all todos page!</h1>
+            <div className="flex flex-col gap-4">
+                {currentItems.map((list) => (
+                    <TodoCard {...list} key={list.id} />
+                ))}
+                <Pagination currentPage={currentPage} totalPages={totalPages} goToNextPage={goToNextPage} goToPreviousPage={goToPreviousPage}></Pagination>
+
             </div>
         </div >
 

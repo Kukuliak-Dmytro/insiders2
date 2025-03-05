@@ -1,6 +1,8 @@
 import axiosClient from "@/utils/http";
 import { TaskType } from "@/types/taskTypes";
-export const  ChangeTaskState=async (id:string, completed:boolean)=>{
+import { QueryKey } from "@tanstack/react-query";
+export const  ChangeTaskState=async ({queryKey, completed}:{queryKey:QueryKey, completed:boolean})=>{
+    const id=queryKey[1]
     const data = await axiosClient.patch(`/task/${id}/toggle`,{completed})
     console.log("Change occured!")
     return data.data
