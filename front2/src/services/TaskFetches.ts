@@ -9,13 +9,15 @@ export const  ChangeTaskState=async ({queryKey, completed}:{queryKey:QueryKey, c
 
 }
 
-export const editTaskById=async(task:TaskType)=>{
-    const data= await axiosClient.patch(`/task/${task.id}`, task)
+export const editTaskById=async({queryKey, task}:{queryKey:QueryKey, task:TaskType})=>{
+    const id=queryKey[1]
+    const data= await axiosClient.patch(`/task/${id}`, task)
     console.log("Edit completed!")
     return data.data
 }
 
-export const deleteTaskById=async(id:string)=>{
+export const deleteTaskById=async({queryKey}:{queryKey:QueryKey})=>{
+     const id=queryKey[1]
     await axiosClient.delete(`/task/${id}`)
     console.log("Deleted Successfully!")
 

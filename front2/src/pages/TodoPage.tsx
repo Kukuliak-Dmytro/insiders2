@@ -60,7 +60,7 @@ export default function TodoPage() {
 
     return (
         <div className="w-3/4 flex flex-col items-center m-auto">
-            <span className="w-full flex justify-between items-center">
+            <span className="w-full flex justify-between items-center gap-2 mb-10">
                 {editing ? (
                     <Input
                         defaultValue={name}
@@ -70,14 +70,19 @@ export default function TodoPage() {
                     <h1>{name}</h1>
                 )}
                 {editing ? (
-                    <Button onClick={() => {
-                        editTodo.mutate({ queryKey: ['todos', currentList!.id, 'edit'], name: name })
-                        setIsEditing(false);
-                    }}>Save</Button>
+                    <span className="flex gap-2">
+                        <Button onClick={() => {
+                            editTodo.mutate({ queryKey: ['todos', currentList!.id, 'edit'], name: name })
+                            setIsEditing(false);
+                        }}>Save</Button>
+                        <Button onClick={()=>deleteTodo.mutate({ queryKey: ['todos', currentList?.id, 'delete'] })}>Delete</Button>
+                    </span >
                 ) : (
-                    <Button onClick={()=>setIsEditing(true)}>Edit</Button>
+                    <span className="flex gap-2">
+                        <Button onClick={()=>setIsEditing(true)}>Edit</Button>
+                        <Button onClick={()=>deleteTodo.mutate({ queryKey: ['todos', currentList?.id, 'delete'] })}>Delete</Button>
+                    </span>
                 )}
-                <Button onClick={()=>deleteTodo.mutate({ queryKey: ['todos', currentList?.id, 'delete'] })}>Delete</Button>
             </span>
             {currentList?.tasks?.map((task) => (
                 <ComplexTaskCard

@@ -4,32 +4,25 @@ import { TaskType } from '@/types/taskTypes';
 import { editTaskById, deleteTaskById } from '@/services/TaskFetches';
 import useFormState from '@/hooks/useFormState';
 import { Input } from '../ui/input';
-
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 interface ComplexTaskCardProps {
     task: TaskType;
     changeCompletedState: (id: string, completed: boolean) => void;
 }
 
-const deleteTask = async (id: string) => {
-    await deleteTaskById(id);
-};
-
-const editTask = async (newTask: TaskType) => {
-    await editTaskById(newTask);
-};
-
 export const ComplexTaskCard: React.FC<ComplexTaskCardProps> = ({ task, changeCompletedState }) => {
     const [isEditing, setIsEditing] = useState(false);
-    const [taskData, handleDataChange] = useFormState<Partial<TaskType>>({id:task.id, title: task.title, description: task.description });
+    const [taskData, handleDataChange] = useFormState<Partial<TaskType>>({title: task.title, description: task.description });
+    const queryClient = useQueryClient()
+    const deleteTask = useMutation({
+        mutationFn: deleteTaskById,
+        onSuccess: () => { console.log("Deletion mutation!"); queryClient.invalidateQueries({ refetchType: 'all' }) }
+    })
+    const editTask = useMutation({
+        mutationFn: editTaskById,
+        onSuccess: () => { console.log("Edit mutation!"); queryClient.invalidateQueries({ refetchType: 'all' }) }
+    })
 
-    const handleEditClick = () => {
-        setIsEditing(true);
-    };
-
-    const handleSaveClick = async () => {
-        await editTask({ ...task, ...taskData });
-        setIsEditing(false);
-    };
 
     return (
         <div key={task.id} className="w-3/4 mb-4 p-4 border rounded-lg bg-gray-50 flex justify-between items-center">
@@ -51,11 +44,14 @@ export const ComplexTaskCard: React.FC<ComplexTaskCardProps> = ({ task, changeCo
             )}
             <div className="flex gap-2 mt-2">
                 {isEditing ? (
-                    <button onClick={handleSaveClick} className="text-blue-500 hover:underline">Save</button>
+                    <button onClick={() => {
+                        editTask.mutate({ queryKey: ['tasks', task.id], task: { ...task, ...taskData } });
+                        setIsEditing(false);
+                    }} className="text-blue-500 hover:underline cursor-pointer">Save</button>
                 ) : (
-                    <button onClick={handleEditClick} className="text-blue-500 hover:underline">Edit</button>
+                    <button onClick={() => setIsEditing(true)} className="text-blue-500 hover:underline cursor-pointer">Edit</button>
                 )}
-                <button onClick={() => { deleteTask(task.id) }} className="text-red-500 hover:underline">Delete</button>
+                <button onClick={() => { deleteTask.mutate({ queryKey: ['tasks', task.id] }) }} className="text-red-500 hover:underline cursor-pointer">Delete</button>
             </div>
         </div>
     );
