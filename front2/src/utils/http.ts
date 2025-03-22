@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getAccessToken, logIn, logOut } from "@/utils/storage";
-
+import { refresh } from "@/services/userFetches";
 const axiosClient = axios.create({
   baseURL: "http://localhost:3000",
   timeout: 1000,
@@ -47,8 +47,8 @@ axiosClient.interceptors.response.use(
 
       try {
         // Запит на оновлення токена
-        const refreshResponse = await axiosClient.post("/auth/refresh");
-        const newAccessToken = refreshResponse.data.accessToken;
+        const refreshResponse =  await refresh();
+        const newAccessToken = refreshResponse.accessToken;
 
         // Оновлюємо локальний токен
         logIn(newAccessToken);
